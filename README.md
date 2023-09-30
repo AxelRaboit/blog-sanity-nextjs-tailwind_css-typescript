@@ -1,4 +1,0 @@
-- Une fois le projet application créer, il faut créer un autre projet pour sanity mais pas dans ce projet
-- Il faut donc aller dans le terminal hors du projet et taper `npm create sanity@latest`
-- utiliser le default dataset dans l'invite de commande
-- Dans le projet application installer: npm install sanity next-sanity
