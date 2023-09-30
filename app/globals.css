@@ -25,3 +25,54 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.container-pagination {
+    margin-top: 2rem;
+}
+
+ul.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+ul.pagination li {
+  margin-right: 0.5rem;
+}
+
+ul.pagination li a {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5rem .8rem;
+  text-decoration: none;
+  @apply border-green-400 text-white;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+ul.pagination li.disabled a {
+  @apply text-white border-green-400;
+}
+
+ul.pagination li a:hover {
+  @apply border-green-400 text-white;
+}
+
+ul.pagination li.selected a {
+  @apply bg-green-400 text-white border-green-400;
+}
+
+ul.pagination li.previous,
+ul.pagination li.next {
+  font-weight: bold;
+}
+
+ul.pagination li.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+ul.pagination li.active a {
+  @apply bg-green-400 text-white
+}

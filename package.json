@@ -9,17 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@portabletext/react": "^3.0.9",
+    "next": "latest",
+    "next-sanity": "^5.5.4",
     "react": "latest",
     "react-dom": "latest",
-    "next": "latest"
+    "react-paginate": "^8.2.0",
+    "sanity": "^3.16.7"
   },
   "devDependencies": {
-    "typescript": "latest",
-    "@types/react": "latest",
     "@types/node": "latest",
+    "@types/react": "latest",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
     "postcss": "latest",
-    "tailwindcss": "latest"
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }
