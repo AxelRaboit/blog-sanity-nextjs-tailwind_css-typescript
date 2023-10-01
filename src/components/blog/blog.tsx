@@ -27,20 +27,27 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     const ONE_HOUR = 3600000;
 
     const handleClick = (postSlug: string) => {
-        const viewedPosts = JSON.parse(
-            localStorage.getItem("sanityBlog:viewedPosts") || "[]"
-        );
-        if (!viewedPosts.includes(postSlug)) {
-            viewedPosts.push(postSlug);
-            localStorage.setItem("sanityBlog:viewedPosts", JSON.stringify(viewedPosts));
+        if (typeof window !== "undefined") {
+            const viewedPosts = JSON.parse(
+                localStorage.getItem("sanityBlog:viewedPosts") || "[]"
+            );
+            if (!viewedPosts.includes(postSlug)) {
+                viewedPosts.push(postSlug);
+                localStorage.setItem(
+                    "sanityBlog:viewedPosts",
+                    JSON.stringify(viewedPosts)
+                );
+            }
         }
     };
 
     useEffect(() => {
-        const viewedPosts = JSON.parse(
-            localStorage.getItem("sanityBlog:viewedPosts") || "[]"
-        );
-        setViewedPosts(viewedPosts);
+        if (typeof window !== "undefined") {
+            const viewedPosts = JSON.parse(
+                localStorage.getItem("sanityBlog:viewedPosts") || "[]"
+            );
+            setViewedPosts(viewedPosts);
+        }
     }, []);
 
     return (
@@ -152,7 +159,10 @@ export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [itemPerPage, setItemPerPage] = useState(() => {
-        const storedItemsPerPage = localStorage.getItem("sanityBlog:itemsPerPage");
+        let storedItemsPerPage;
+        if (typeof window !== 'undefined') {
+            storedItemsPerPage = localStorage.getItem("sanityBlog:itemsPerPage");
+        }
         return storedItemsPerPage ? parseInt(storedItemsPerPage, 10) : 6;
     });
     const [searchQuery, setSearchQuery] = useState("");
@@ -169,7 +179,10 @@ export default function Blog() {
     ) => {
         const selectedItemsPerPage = parseInt(event.target.value, 10);
 
-        localStorage.setItem("sanityBlog:itemsPerPage", selectedItemsPerPage.toString());
+        localStorage.setItem(
+            "sanityBlog:itemsPerPage",
+            selectedItemsPerPage.toString()
+        );
 
         setItemPerPage(selectedItemsPerPage);
     };
