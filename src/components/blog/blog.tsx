@@ -47,7 +47,10 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
                 {currentItems.map((post) => (
-                    <div key={post._id} className="bg-zinc-900 rounded">
+                    <div
+                        key={post._id}
+                        className="bg-zinc-900 rounded relative flex flex-col"
+                    >
                         <div className="w-full mx-auto">
                             {post.image ? (
                                 <Image
@@ -71,15 +74,15 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                         </div>
 
                         <div className="px-6 py-4">
-                            <p>{post.slug}</p>
-
                             {!viewedPosts.includes(post.slug) &&
                             new Date(post._createdAt).getTime() >
                                 new Date().getTime() - ONE_WEEK ? (
                                 <span className="inline-block bg-green-400 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
                                     Nouveau
                                 </span>
-                            ) : null}
+                            ) : (
+                                <span className="inline-block bg-transparent px-3 py-1mr-2 mb-2"></span>
+                            )}
 
                             <div className="font-bold text-xl mb-2">
                                 {post.title}
@@ -101,7 +104,7 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                                 </span>
                             ))}
                         </div>
-                        <div className="px-6 pt-4 pb-2">
+                        <div className="mt-auto text-center p-4">
                             <Link
                                 href={`/blog/${post.slug}`}
                                 onClick={() => handleClick(post.slug)}
