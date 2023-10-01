@@ -204,7 +204,7 @@ export default function Blog() {
             <div className="mb-4 mx-4">
                 <input
                     type="text"
-                    placeholder="Rechercher..."
+                    placeholder="Rechercher par titre, description, tags..."
                     className="w-full md:w-96 rounded text-black"
                     value={searchQuery}
                     onChange={handleSearchQueryChange}
