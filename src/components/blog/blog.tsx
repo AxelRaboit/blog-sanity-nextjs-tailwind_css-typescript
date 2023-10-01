@@ -22,9 +22,9 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
         setItemOffset(newOffset);
     };
 
-    const Oneweek = 604800000;
-    const Oneday = 86400000;
-    const Onehour = 3600000;
+    const ONE_WEEK = 604800000;
+    const ONE_DAY = 86400000;
+    const ONE_HOUR = 3600000;
 
     const handleClick = (postSlug: string) => {
         const viewedPosts = JSON.parse(
@@ -75,7 +75,7 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
 
                             {!viewedPosts.includes(post.slug) &&
                             new Date(post._createdAt).getTime() >
-                                new Date().getTime() - Oneweek ? (
+                                new Date().getTime() - ONE_WEEK ? (
                                 <span className="inline-block bg-green-400 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
                                     Nouveau
                                 </span>
