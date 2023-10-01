@@ -6,7 +6,7 @@ import PostsLoading from "./postsLoading";
 import Link from "next/link";
 import Post from "@/types/Post";
 import PaginatedItems from "@/types/PaginatedItems";
-import { getPosts } from "@/sanity/utils/utils";
+import { getPosts, getPostsByQuery } from "@/sanity/utils/utils";
 import CustomButton from "@/src/components/customButton/customButton";
 import CropText from "@/src/utils/cropText";
 
@@ -52,7 +52,12 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                             <div className="font-bold text-xl mb-2">
                                 {post.title}
                             </div>
-                            <CropText text={post.description[0]["children"][0]["text"]} limit={255} />
+                            <CropText
+                                text={
+                                    post.description[0]["children"][0]["text"]
+                                }
+                                limit={255}
+                            />
                         </div>
                         <div className="px-6 pt-4 pb-2">
                             {post.tag.map((tag, i) => (
@@ -109,6 +114,26 @@ export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [itemPerPage, setItemPerPage] = useState(6);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState<Post[]>([]);
+
+    const handleSearchQueryChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const performSearch = async () => {
+        try {
+            setLoading(true);
+            const searchData = await getPostsByQuery(searchQuery);
+            setSearchResults(searchData);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error while fetching search results:", error);
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -121,7 +146,6 @@ export default function Blog() {
                         new Date(a._createdAt).getTime()
                     );
                 });
-
                 setPosts(data);
                 setLoading(false);
             } catch (error) {
@@ -138,10 +162,29 @@ export default function Blog() {
             <h1 className="text-4xl font-bold mb-10 mx-4 text-green-400">
                 Blog
             </h1>
+
+            <div className="mb-4 mx-4">
+                <input
+                    type="text"
+                    placeholder="Rechercher..."
+                    className="w-full md:w-96 rounded text-black"
+                    value={searchQuery}
+                    onChange={handleSearchQueryChange}
+                />
+                <CustomButton
+                    title="Soumettre"
+                    containerStyles="bg-green-400 text-white rounded mt-2 md:mt-0 md:ml-2  p-2 px-4 w-full md:w-56"
+                    handleClick={performSearch}
+                />
+            </div>
+
             {loading ? (
                 <PostsLoading itemPerPage={itemPerPage} />
             ) : (
-                <PaginatedItems itemsPerPage={itemPerPage} posts={posts} />
+                <PaginatedItems
+                    itemsPerPage={itemPerPage}
+                    posts={searchResults.length > 0 ? searchResults : posts}
+                />
             )}
         </div>
     );
