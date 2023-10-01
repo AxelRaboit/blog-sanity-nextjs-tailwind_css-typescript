@@ -41,6 +41,14 @@ export default function PostComp({ slug }: Props) {
                         <h1 className="text-4xl font-bold mb-10 text-green-400">
                             {post?.title}
                         </h1>
+                        <div className="my-10">
+                        <Link href={"/"}>
+                            <CustomButton
+                                title="Retour à la liste des articles"
+                                containerStyles="bg-green-400 text-white rounded p-2 px-4 w-full md:w-64"
+                            />
+                        </Link>
+                        </div>
                         <div className="flex flex-col md:flex-row">
                             {post?.image ? (
                                 <Image

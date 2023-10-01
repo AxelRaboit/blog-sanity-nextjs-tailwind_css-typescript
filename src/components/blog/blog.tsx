@@ -16,6 +16,7 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     const currentItems = posts.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(posts.length / itemsPerPage);
     const [viewedPosts, setViewedPosts] = useState<string[]>([]);
+    const [loadingButton, setLoadingButton] = useState<string | null>(null);
 
     const handlePageClick = (event: any) => {
         const newOffset = event.selected * itemsPerPage;
@@ -39,6 +40,7 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                 );
             }
         }
+        setLoadingButton(postSlug);
     };
 
     useEffect(() => {
@@ -115,8 +117,13 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                                 onClick={() => handleClick(post.slug)}
                             >
                                 <CustomButton
-                                    title="Lire la suite..."
+                                    title={
+                                        loadingButton === post.slug
+                                            ? "Chargement..."
+                                            : "Lire la suite..."
+                                    }
                                     containerStyles="bg-green-400 text-white rounded p-2 px-4 w-full"
+                                    isLoading={loadingButton === post.slug}
                                 />
                             </Link>
                         </div>
@@ -155,7 +162,7 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
 
 export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loadingPosts, setLoadingPosts] = useState(true);
     const [itemPerPage, setItemPerPage] = useState(() => {
         const storedItemsPerPage = localStorage.getItem(
             "sanityBlog:itemsPerPage"
@@ -164,6 +171,7 @@ export default function Blog() {
     });
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<Post[]>([]);
+    const [loadingSearch, setLoadingSearch] = useState(false);
 
     const handleSearchQueryChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -186,20 +194,20 @@ export default function Blog() {
 
     const performSearch = async () => {
         try {
-            setLoading(true);
+            setLoadingSearch(true);
             const searchData = await getPostsByQuery(searchQuery);
             setSearchResults(searchData);
-            setLoading(false);
+            setLoadingSearch(false);
         } catch (error) {
             console.error("Error while fetching search results:", error);
-            setLoading(false);
+            setLoadingSearch(false);
         }
     };
 
     useEffect(() => {
         async function fetchData() {
             try {
-                setLoading(true);
+                setLoadingPosts(true);
                 const data = await getPosts();
                 data.sort(function (a, b) {
                     return (
@@ -208,10 +216,10 @@ export default function Blog() {
                     );
                 });
                 setPosts(data);
-                setLoading(false);
+                setLoadingPosts(false);
             } catch (error) {
                 console.error("Error while fetching data:", error);
-                setLoading(false);
+                setLoadingPosts(false);
             }
         }
 
@@ -237,6 +245,7 @@ export default function Blog() {
                         title="Soumettre"
                         containerStyles="bg-green-400 text-white rounded mt-2 lg:mt-0 lg:ml-2  p-2 px-4 w-full lg:w-56"
                         handleClick={performSearch}
+                        isLoading={loadingSearch}
                     />
                 </div>
 
@@ -256,7 +265,7 @@ export default function Blog() {
                 </div>
             </div>
 
-            {loading ? (
+            {loadingPosts ? (
                 <PostsLoading itemPerPage={itemPerPage} />
             ) : (
                 <PaginatedItems
