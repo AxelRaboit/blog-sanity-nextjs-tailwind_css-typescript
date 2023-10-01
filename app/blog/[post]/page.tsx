@@ -21,7 +21,7 @@ export default async function Post({ params }: Props) {
                 <h1 className="text-4xl font-bold mb-10 text-green-400">
                     {post.title}
                 </h1>
-                <div className="flex">
+                <div className="flex flex-col md:flex-row">
                     {post.image ? (
                         <Image
                             src={post.image}
@@ -29,7 +29,7 @@ export default async function Post({ params }: Props) {
                             width={300}
                             height={300}
                             priority={true}
-                            className="object-cover h-96 w-96 rounded"
+                            className="object-cover h-96 rounded w-full md:w-96"
                         />
                     ) : (
                         <Image
@@ -41,7 +41,7 @@ export default async function Post({ params }: Props) {
                             className="object-cover h-96 w-96 rounded"
                         />
                     )}
-                    <div className="px-6 py-4">
+                    <div className="py-4 md:ml-10">
                         <p>{post.description[0]["children"][0]["text"]}</p>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ export default async function Post({ params }: Props) {
                 <Link href={"/"}>
                     <CustomButton
                         title="Retour à la liste des articles"
-                        containerStyles="bg-green-400 text-white rounded p-2 px-4"
+                        containerStyles="bg-green-400 text-white rounded p-2 px-4 w-full md:w-64"
                     />
                 </Link>
             </div>

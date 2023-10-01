@@ -3,27 +3,67 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+        )
+        rgb(var(--background-start-rgb));
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h5 {
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h6 {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1.5rem;
 }
 
 .container-pagination {
@@ -31,48 +71,48 @@ body {
 }
 
 ul.pagination {
-  display: flex;
-  justify-content: center;
-  list-style-type: none;
-  padding: 0;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
 }
 
 ul.pagination li {
-  margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 ul.pagination li a {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 0.5rem .8rem;
-  text-decoration: none;
-  @apply border-green-400 text-white;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem 0.8rem;
+    text-decoration: none;
+    @apply border-green-400 text-white;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 ul.pagination li.disabled a {
-  @apply text-white border-green-400;
+    @apply text-white border-green-400;
 }
 
 ul.pagination li a:hover {
-  @apply border-green-400 text-white;
+    @apply border-green-400 text-white;
 }
 
 ul.pagination li.selected a {
-  @apply bg-green-400 text-white border-green-400;
+    @apply bg-green-400 text-white border-green-400;
 }
 
 ul.pagination li.previous,
 ul.pagination li.next {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 ul.pagination li.disabled {
-  pointer-events: none;
-  opacity: 0.5;
-  cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 ul.pagination li.active a {
-  @apply bg-green-400 text-white
+    @apply bg-green-400 text-white;
 }
