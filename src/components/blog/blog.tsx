@@ -163,15 +163,19 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
 export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loadingPosts, setLoadingPosts] = useState(true);
-    const [itemPerPage, setItemPerPage] = useState(() => {
-        const storedItemsPerPage = localStorage.getItem(
-            "sanityBlog:itemsPerPage"
-        );
-        return storedItemsPerPage ? parseInt(storedItemsPerPage, 10) : 6;
-    });
+    const [itemPerPage, setItemPerPage] = useState(6);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<Post[]>([]);
     const [loadingSearch, setLoadingSearch] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+            const storedItemsPerPage = localStorage.getItem("sanityBlog:itemsPerPage");
+            if (storedItemsPerPage) {
+                setItemPerPage(parseInt(storedItemsPerPage, 10));
+            }
+        }
+    }, []);
 
     const handleSearchQueryChange = (
         event: React.ChangeEvent<HTMLInputElement>
