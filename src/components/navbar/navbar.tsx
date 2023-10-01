@@ -22,7 +22,7 @@ const NavbarComp = () => {
                             <Navbar.Link
                                 href="/"
                                 active={false}
-                                className="text-white"
+                                className="text-white md:hover:text-white md:hover:underline"
                             >
                                 Blog
                             </Navbar.Link>
