@@ -8,6 +8,7 @@ import Post from "@/types/Post";
 import PaginatedItems from "@/types/PaginatedItems";
 import { getPosts } from "@/sanity/utils/utils";
 import CustomButton from "@/src/components/customButton/customButton";
+import CropText from "@/src/utils/cropText";
 
 function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     const [itemOffset, setItemOffset] = useState(0);
@@ -54,7 +55,7 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                             <div className="font-bold text-xl mb-2">
                                 {post.title}
                             </div>
-                            <p>{post.description[0]["children"][0]["text"]}</p>
+                            <CropText text={post.description[0]["children"][0]["text"]} limit={255} />
                         </div>
                         <div className="px-6 pt-4 pb-2">
                             {post.tag.map((tag, i) => (
