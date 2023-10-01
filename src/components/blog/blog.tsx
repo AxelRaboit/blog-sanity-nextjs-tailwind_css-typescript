@@ -16,7 +16,6 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     const currentItems = posts.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(posts.length / itemsPerPage);
     const [viewedPosts, setViewedPosts] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
 
     const handlePageClick = (event: any) => {
         const newOffset = event.selected * itemsPerPage;
@@ -27,10 +26,8 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     const ONE_DAY = 86400000;
     const ONE_HOUR = 3600000;
 
-    const handleClick = async (postSlug: string) => {
+    const handleClick = (postSlug: string) => {
         if (typeof window !== "undefined") {
-            setIsLoading(true);
-    
             const viewedPosts = JSON.parse(
                 localStorage.getItem("sanityBlog:viewedPosts") || "[]"
             );
@@ -41,10 +38,6 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                     JSON.stringify(viewedPosts)
                 );
             }
-    
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-            setIsLoading(false);
         }
     };
 
@@ -124,7 +117,6 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                                 <CustomButton
                                     title="Lire la suite..."
                                     containerStyles="bg-green-400 text-white rounded p-2 px-4 w-full"
-                                    isLoading={isLoading}
                                 />
                             </Link>
                         </div>
@@ -165,12 +157,9 @@ export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [itemPerPage, setItemPerPage] = useState(() => {
-        let storedItemsPerPage;
-        if (typeof window !== "undefined") {
-            storedItemsPerPage = localStorage.getItem(
-                "sanityBlog:itemsPerPage"
-            );
-        }
+        const storedItemsPerPage = localStorage.getItem(
+            "sanityBlog:itemsPerPage"
+        );
         return storedItemsPerPage ? parseInt(storedItemsPerPage, 10) : 6;
     });
     const [searchQuery, setSearchQuery] = useState("");
