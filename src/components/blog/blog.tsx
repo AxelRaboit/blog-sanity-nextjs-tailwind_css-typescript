@@ -28,11 +28,11 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
 
     const handleClick = (postSlug: string) => {
         const viewedPosts = JSON.parse(
-            localStorage.getItem("viewedPosts") || "[]"
+            localStorage.getItem("sanityblog-viewedPosts") || "[]"
         );
         if (!viewedPosts.includes(postSlug)) {
             viewedPosts.push(postSlug);
-            localStorage.setItem("viewedPosts", JSON.stringify(viewedPosts));
+            localStorage.setItem("sanityblog-viewedPosts", JSON.stringify(viewedPosts));
         }
     };
 
@@ -152,7 +152,7 @@ export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [itemPerPage, setItemPerPage] = useState(() => {
-        const storedItemsPerPage = localStorage.getItem("itemsPerPage");
+        const storedItemsPerPage = localStorage.getItem("sanityblog-itemsPerPage");
         return storedItemsPerPage ? parseInt(storedItemsPerPage, 10) : 6;
     });
     const [searchQuery, setSearchQuery] = useState("");
@@ -169,7 +169,7 @@ export default function Blog() {
     ) => {
         const selectedItemsPerPage = parseInt(event.target.value, 10);
 
-        localStorage.setItem("itemsPerPage", selectedItemsPerPage.toString());
+        localStorage.setItem("sanityblog-itemsPerPage", selectedItemsPerPage.toString());
 
         setItemPerPage(selectedItemsPerPage);
     };
