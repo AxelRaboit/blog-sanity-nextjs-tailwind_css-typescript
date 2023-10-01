@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ReactPaginate from "react-paginate";
-import Loading from "./loading";
+import PostsLoading from "./postsLoading";
 import Link from "next/link";
 import Post from "@/types/Post";
 import PaginatedItems from "@/types/PaginatedItems";
@@ -144,7 +144,7 @@ export default function Blog() {
                 Blog
             </h1>
             {loading ? (
-                <Loading itemPerPage={itemPerPage} />
+                <PostsLoading itemPerPage={itemPerPage} />
             ) : (
                 <PaginatedItems itemsPerPage={itemPerPage} posts={posts} />
             )}

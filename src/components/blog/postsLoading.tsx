@@ -1,10 +1,10 @@
 import React from "react";
 
-interface LoadingProps {
+interface PostsLoadingProps {
     itemPerPage: number;
 }
 
-function LoadingTemplate() {
+function PostsLoadingTemplate() {
     return (
         <div className="bg-zinc-900 rounded">
             <div className="rounded-t w-full bg-zinc-800 h-96"></div>
@@ -24,8 +24,8 @@ function LoadingTemplate() {
     );
 }
 
-function Loading({ itemPerPage }: LoadingProps) {
-    const loadingItems = Array(itemPerPage).fill(<LoadingTemplate />);
+function PostsLoading({ itemPerPage }: PostsLoadingProps) {
+    const loadingItems = Array(itemPerPage).fill(<PostsLoadingTemplate />);
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
@@ -36,4 +36,4 @@ function Loading({ itemPerPage }: LoadingProps) {
     );
 }
 
-export default Loading;
+export default PostsLoading;
