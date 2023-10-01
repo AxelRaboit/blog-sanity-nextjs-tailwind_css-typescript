@@ -21,7 +21,6 @@ export default function PostComp({ slug }: Props) {
             try {
                 setLoading(true);
                 const post = await getPost(slug);
-                console.log(post);
                 setPost(post);
                 setLoading(false);
             } catch (error) {

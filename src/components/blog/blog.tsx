@@ -15,11 +15,33 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     const endOffset = itemOffset + itemsPerPage;
     const currentItems = posts.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(posts.length / itemsPerPage);
+    const [viewedPosts, setViewedPosts] = useState<string[]>([]);
 
     const handlePageClick = (event: any) => {
         const newOffset = event.selected * itemsPerPage;
         setItemOffset(newOffset);
     };
+
+    const Oneweek = 604800000;
+    const Oneday = 86400000;
+    const Onehour = 3600000;
+
+    const handleClick = (postSlug: string) => {
+        const viewedPosts = JSON.parse(
+            localStorage.getItem("viewedPosts") || "[]"
+        );
+        if (!viewedPosts.includes(postSlug)) {
+            viewedPosts.push(postSlug);
+            localStorage.setItem("viewedPosts", JSON.stringify(viewedPosts));
+        }
+    };
+
+    useEffect(() => {
+        const viewedPosts = JSON.parse(
+            localStorage.getItem("viewedPosts") || "[]"
+        );
+        setViewedPosts(viewedPosts);
+    }, []);
 
     return (
         <>
@@ -49,6 +71,16 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                         </div>
 
                         <div className="px-6 py-4">
+                            <p>{post.slug}</p>
+
+                            {!viewedPosts.includes(post.slug) &&
+                            new Date(post._createdAt).getTime() >
+                                new Date().getTime() - Oneweek ? (
+                                <span className="inline-block bg-green-400 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                                    Nouveau
+                                </span>
+                            ) : null}
+
                             <div className="font-bold text-xl mb-2">
                                 {post.title}
                             </div>
@@ -70,7 +102,10 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                             ))}
                         </div>
                         <div className="px-6 pt-4 pb-2">
-                            <Link href={`/blog/${post.slug}`}>
+                            <Link
+                                href={`/blog/${post.slug}`}
+                                onClick={() => handleClick(post.slug)}
+                            >
                                 <CustomButton
                                     title="Lire la suite..."
                                     containerStyles="bg-green-400 text-white rounded p-2 px-4 w-full"
