@@ -85,8 +85,8 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
                     breakClassName="page-item"
                     breakLinkClassName="page-link"
                     pageCount={pageCount}
-                    pageRangeDisplayed={4}
-                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={1}
+                    marginPagesDisplayed={1}
                     onPageChange={handlePageClick}
                     containerClassName="pagination justify-content-center"
                     pageClassName="page-item"
