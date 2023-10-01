@@ -18,9 +18,6 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
 
     const handlePageClick = (event: any) => {
         const newOffset = event.selected * itemsPerPage;
-        console.log(
-            `User requested page number ${event.selected}, which is offset ${newOffset}`
-        );
         setItemOffset(newOffset);
     };
 
@@ -117,10 +114,7 @@ export default function Blog() {
         async function fetchData() {
             try {
                 setLoading(true);
-
                 const data = await getPosts();
-                console.log(data);
-
                 data.sort(function (a, b) {
                     return (
                         new Date(b._createdAt).getTime() -
