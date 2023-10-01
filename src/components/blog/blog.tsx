@@ -151,7 +151,10 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
 export default function Blog() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
-    const [itemPerPage, setItemPerPage] = useState(6);
+    const [itemPerPage, setItemPerPage] = useState(() => {
+        const storedItemsPerPage = localStorage.getItem("itemsPerPage");
+        return storedItemsPerPage ? parseInt(storedItemsPerPage, 10) : 6;
+    });
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<Post[]>([]);
 
@@ -159,6 +162,16 @@ export default function Blog() {
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setSearchQuery(event.target.value);
+    };
+
+    const handleItemsPerPageChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        const selectedItemsPerPage = parseInt(event.target.value, 10);
+
+        localStorage.setItem("itemsPerPage", selectedItemsPerPage.toString());
+
+        setItemPerPage(selectedItemsPerPage);
     };
 
     const performSearch = async () => {
@@ -201,19 +214,36 @@ export default function Blog() {
                 Blog
             </h1>
 
-            <div className="mb-4 mx-4">
-                <input
-                    type="text"
-                    placeholder="Rechercher par titre, description, tag..."
-                    className="w-full md:w-96 rounded text-black"
-                    value={searchQuery}
-                    onChange={handleSearchQueryChange}
-                />
-                <CustomButton
-                    title="Soumettre"
-                    containerStyles="bg-green-400 text-white rounded mt-2 md:mt-0 md:ml-2  p-2 px-4 w-full md:w-56"
-                    handleClick={performSearch}
-                />
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-10">
+                <div className="mb-4 mx-4">
+                    <input
+                        type="text"
+                        placeholder="Rechercher par titre, description, tag..."
+                        className="w-full lg:w-96 rounded text-black"
+                        value={searchQuery}
+                        onChange={handleSearchQueryChange}
+                    />
+                    <CustomButton
+                        title="Soumettre"
+                        containerStyles="bg-green-400 text-white rounded mt-2 lg:mt-0 lg:ml-2  p-2 px-4 w-full lg:w-56"
+                        handleClick={performSearch}
+                    />
+                </div>
+
+                <div className="mb-4 mx-4 flex justify-end items-center">
+                    <label htmlFor="itemsPerPage">Articles par page:</label>
+                    <select
+                        id="itemsPerPage"
+                        value={itemPerPage}
+                        onChange={handleItemsPerPageChange}
+                        className="rounded p-2 ml-2 text-black"
+                    >
+                        <option value="3">3</option>
+                        <option value="6">6</option>
+                        <option value="9">9</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
             </div>
 
             {loading ? (
