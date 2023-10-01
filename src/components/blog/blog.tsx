@@ -42,12 +42,10 @@ function PaginatedItems({ itemsPerPage, posts }: PaginatedItems) {
     };
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const viewedPosts = JSON.parse(
-                localStorage.getItem("sanityBlog:viewedPosts") || "[]"
-            );
-            setViewedPosts(viewedPosts);
-        }
+        const viewedPosts = JSON.parse(
+            localStorage.getItem("sanityBlog:viewedPosts") || "[]"
+        );
+        setViewedPosts(viewedPosts);
     }, []);
 
     return (
